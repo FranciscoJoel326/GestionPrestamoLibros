@@ -1,0 +1,130 @@
+@page "/Prestamo/Index"
+
+@inject PrestamosService prestamosService
+
+<PageTitle>Registro de Prestamos</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header d-flex justify-content-between align-center mb-4">
+            <h5 class="card-title">Registro de Prestamos</h5>
+            <a href="/Prestamo/Create" class="btn btn-primary"> <span class="bi bi-plus-square mt-3"></span> Crear</a>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3">
+                    <label class="col-form-label"><strong>Filtrar por</strong></label>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-form-label"><strong>B&uacute;squeda</strong></label>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <InputSelect class="form-select" @bind-Value="Filtro">
+                        <option value="" selected disabled>Elija una opci&oacute;n</option>
+                        <option value="Deudor">Deudor</option>
+                        <option value="Concepto">Concepto</option>
+                    </InputSelect>
+                </div>
+
+                <div class="col-4">
+                    <div class="input-group">
+                        <input class="form-control" @bind="ValorFiltro" placeholder="Buscar" />
+                        <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
+                    </div>
+                </div>
+            </div>
+
+            <QuickGrid Items="@ListaPrestamos.AsQueryable()" Class="table table-hover mt-3">
+                <PropertyColumn Property="p => p.PrestamoId" Title="PrestamoId" />
+                <PropertyColumn Property="p => p.Deudor.Nombres" Title="Deudor" />
+                <PropertyColumn Property="p => p.Concepto" Title="Concepto" />
+                <PropertyColumn Property="p => p.Monto" Title="Monto" />
+                <TemplateColumn Title="Opciones">
+                    <a href="/Prestamo/Edit/@context.PrestamoId" class="btn btn-outline-primary bi bi-pencil-square"></a>
+                </TemplateColumn>
+            </QuickGrid>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-center mb-4">
+            <label>Cantidad:  @ListaPrestamos.Count</label>
+            <label>Total:  @CalcularTotal()</label>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public List<Prestamos> ListaPrestamos { get; set; } = new List<Prestamos>();
+
+    public string Filtro { get; set; } = string.Empty;
+    public string ValorFiltro { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaPrestamos = await prestamosService.GetList(p => p.PrestamoId > 0);
+    }
+
+    private async Task Buscar()
+    {
+        var todosLosPrestamos = await prestamosService.GetList(p => p.PrestamoId > 0);
+
+        if (ValorFiltro.Trim() != "")
+        {
+            if (Filtro == "Deudor")
+            {
+                List<Prestamos> listaFiltrada = new List<Prestamos>();
+
+                foreach (var prestamo in todosLosPrestamos)
+                {
+                    if (prestamo.Deudor.Nombres.ToLower().Contains(ValorFiltro.ToLower()))
+                    {
+                        listaFiltrada.Add(prestamo);
+                    }
+                }
+
+                ListaPrestamos = listaFiltrada;
+            }
+            else if (Filtro == "Concepto")
+            {
+                List<Prestamos> listaFiltrada = new List<Prestamos>();
+
+                foreach (var prestamo in todosLosPrestamos)
+                {
+                    if (prestamo.Concepto.ToLower().Contains(ValorFiltro.ToLower()))
+                    {
+                        listaFiltrada.Add(prestamo);
+                    }
+                }
+
+                ListaPrestamos = listaFiltrada;
+            }
+        }
+        else
+        {
+            ListaPrestamos = todosLosPrestamos;
+        }
+    }
+
+    private async Task Restablecer()
+    {
+        ListaPrestamos = await prestamosService.GetList(e => e.PrestamoId > 0);
+        Filtro = string.Empty;
+        ValorFiltro = string.Empty;
+    }
+
+    private double CalcularTotal()
+    {
+        double total = 0;
+
+        foreach (var prestamo in ListaPrestamos)
+        {
+            total = total + prestamo.Monto;
+        }
+
+        return total;
+    }
+}

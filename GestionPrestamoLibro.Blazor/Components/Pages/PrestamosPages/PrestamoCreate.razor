@@ -1,0 +1,76 @@
+@page "/Prestamo/Create"
+
+@inject PrestamosService prestamosService
+@inject DeudoresService deudoresService
+@inject NavigationManager navigationManager
+@inject ToastService toastService
+
+<PageTitle>Create</PageTitle>
+<EditForm Model="Prestamo" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header text-center">
+                <h5 class="card-title">Crear Prestamo</h5>
+            </div>
+
+            <div class="card-body ">
+
+                <div class="mb-3">
+                    <label class="form-label"><strong>Deudor</strong></label>
+                    <InputSelect class="form-control form-select" @bind-Value="Prestamo.DeudorId">
+                        <option>Elija una opci&oacute;n</option>
+                        @foreach (var deudor in ListaDeudores)
+                        {
+                            <option value="@deudor.DeudorId">@deudor.Nombres</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="(() => Prestamo.DeudorId)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"><strong>Concepto</strong></label>
+                    <InputText class="form-control" @bind-Value="Prestamo.Concepto"></InputText>
+                    <ValidationMessage For="(() => Prestamo.Concepto)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"><strong>Monto</strong></label>
+                    <InputNumber class="form-control" @bind-Value="Prestamo.Monto"></InputNumber>
+                    <ValidationMessage For="(() => Prestamo.Monto)" />
+                </div>
+            </div>
+
+            <div class="card-footer text-center mt-2">
+                <a href="/Prestamo/Index" class="btn btn-secondary"> <span class="bi bi-arrow-left"></span> Volver</a>
+                <button type="submit" class="btn btn-primary bi bi-floppy"> Guardar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+@Mensaje
+
+@code {
+    public Prestamos Prestamo { get; set; } = new Prestamos();
+    public string Mensaje { get; set; } = string.Empty;
+    public List<Deudores> ListaDeudores { get; set; } = new List<Deudores>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaDeudores = await deudoresService.GetList(d => d.DeudorId > 0);
+    }
+
+    public async Task Guardar()
+    {
+        var creado = await prestamosService.Guardar(Prestamo);
+
+        if (creado)
+        {
+            toastService.ShowSuccess("Cobro Guardado Correctamente");
+            navigationManager.NavigateTo("/Prestamo/Index");
+        }
+        else
+        {
+            toastService.ShowError("No se pudo guardar correctamente");
+        }
+    }
+}

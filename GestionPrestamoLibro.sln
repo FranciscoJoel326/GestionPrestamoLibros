@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionPrestamoLibro", "GestionPrestamoLibro.Blazor\GestionPrestamoLibro.csproj", "{ED1219D4-EBD5-4D7D-A208-6A16A7A2849F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionPrestamoLibro.Test", "GestionPrestamoLibro.Test\GestionPrestamoLibro.Test.csproj", "{FA651EA7-232C-49D2-83B7-0FF694A7DF73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED1219D4-EBD5-4D7D-A208-6A16A7A2849F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED1219D4-EBD5-4D7D-A208-6A16A7A2849F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED1219D4-EBD5-4D7D-A208-6A16A7A2849F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED1219D4-EBD5-4D7D-A208-6A16A7A2849F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA651EA7-232C-49D2-83B7-0FF694A7DF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA651EA7-232C-49D2-83B7-0FF694A7DF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA651EA7-232C-49D2-83B7-0FF694A7DF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA651EA7-232C-49D2-83B7-0FF694A7DF73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47299B85-981D-46C5-8C8E-121A66A7F9C2}
+	EndGlobalSection
+EndGlobal

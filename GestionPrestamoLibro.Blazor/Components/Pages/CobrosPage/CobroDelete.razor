@@ -1,0 +1,88 @@
+@page "/Cobro/Delete/{CobroId:int}"
+
+@inject CobrosService cobroService
+@inject DeudoresService deudoresService
+@inject NavigationManager navigationManager
+@inject ToastService toastService
+@inject IJSRuntime JS
+
+<PageTitle>Delete</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h5><strong>Datos del cobro</strong></h5>
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <h5><strong>Desea eliminar el cobro?</strong></h5>
+            </div>
+            <ul class="mt-4">
+                <li><strong>CobroId: </strong>@Cobro.CobroId</li>
+                <li><strong>Fecha: </strong>@Cobro.Fecha</li>
+                <li><strong>DeudorId: </strong>@Deudor.DeudorId</li>
+                <li><strong>Deudor: </strong>@Deudor.Nombres</li>
+                <li><strong>Monto: </strong>@Cobro.Monto.ToString("N2")</li>
+            </ul>
+            <div class="border border-success p-2 mt-2">
+                <h6><strong>Detalles de cobro</strong></h6>
+                <QuickGrid Items="@Cobro.CobrosDetalle.AsQueryable()" Class="table mt-2">
+                    <PropertyColumn Property="d => d.PrestamoId" Title="Préstamo ID" />
+                    <PropertyColumn Property="d => d.ValorCobrado" Title="Valor Cobrado" />
+                </QuickGrid>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="/Cobro/Index" class="btn btn-primary"> <span class="bi bi-arrow-left"></span> Volver</a>
+            <button type="button" class="btn btn-danger bi bi-trash" @onclick="Eliminar"> Eliminar</button>
+        </div>
+    </div>
+</div>
+@Mensaje
+
+@code {
+    [Parameter]
+    public int CobroId { get; set; }
+
+    public Cobros Cobro { get; set; } = new Cobros();
+
+    public Deudores Deudor { get; set; } = new Deudores();
+    public string Mensaje { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cobroEncontrado = await cobroService.Buscar(CobroId);
+
+        if (cobroEncontrado != null)
+        {
+            Cobro = cobroEncontrado;
+
+            var deudorEncontrado = await deudoresService.Buscar(Cobro.DeudorId);
+            if (deudorEncontrado != null)
+            {
+                Deudor = deudorEncontrado;
+            }
+        }
+    }
+
+    public async Task Eliminar()
+    {
+        bool confirmado = await JS.InvokeAsync<bool>("confirm", "¿Está seguro de que desea eliminar este cobro?");
+
+        if (confirmado == false)
+        {
+            return;
+        }
+
+        var eliminado = await cobroService.Eliminar(Cobro.CobroId);
+
+        if (eliminado)
+        {
+            toastService.ShowSuccess("Eliminado Correctamente");
+            navigationManager.NavigateTo("/Cobro/Index");
+        }
+        else
+        {
+            toastService.ShowError("No se ha podido eliminar el cobro");
+        }
+    }
+}

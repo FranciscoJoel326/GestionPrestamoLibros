@@ -1,0 +1,67 @@
+@typeparam TEntity
+
+<div class="col-auto input-group align-items-center">
+    <label class="col-form-label input-group-text">Seleccione:</label>
+
+    <InputSelect class="form-control form-select" id="product-select" @bind-Value="SelectedEntity">
+        <option value="">-- Select a One --</option>
+        @foreach (var product in Entities)
+        {
+            <option value="@product">@GeTModelDisplay(product)</option>
+        }
+    </InputSelect>
+    <label class="col-form-label input-group-text">Valor:</label>
+    <InputNumber class="form-control" id="quantity-input" @bind-Value="Quantity" min="1" />
+
+    <button class="btn btn-primary" @onclick="TriggerSelection">Confirm</button>
+</div>
+
+@code {
+    [Parameter]
+    public List<TEntity> Entities { get; set; } = new List<TEntity>();
+
+    [Parameter]
+    [EditorRequired]
+    public string DisplayMember { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<(TEntity Entity, double Quantity)> OnEntitySelected { get; set; }
+
+    private TEntity? SelectedEntity { get; set; }
+    private int Quantity { get; set; } = 1;
+
+    private string GeTModelDisplay(TEntity entity)
+    {
+        if (entity == null)
+        {
+            return string.Empty;
+        }
+
+        var entityType = entity.GetType();
+        var nameProperty = entityType.GetProperty(DisplayMember);
+
+        if (nameProperty != null)
+        {
+            var valor = nameProperty.GetValue(entity);
+            if (valor != null)
+            {
+                return valor.ToString() ?? "";
+            }
+        }
+
+        var texto = entity.ToString();
+        if (texto == null)
+        {
+            return "";
+        }
+        return texto;
+    }
+
+    private async Task TriggerSelection()
+    {
+        if (SelectedEntity != null)
+        {
+            await OnEntitySelected.InvokeAsync((SelectedEntity, Quantity));
+        }
+    }
+}

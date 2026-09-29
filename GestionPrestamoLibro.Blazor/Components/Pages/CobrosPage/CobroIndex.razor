@@ -1,0 +1,163 @@
+@page "/Cobro/Index"
+
+@inject CobrosService cobroService
+@inject NavigationManager navigationManager
+@inject ToastService toastService
+
+<PageTitle>Index</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header d-flex justify-content-between align-center mb-4">
+            <h5 class="card-title">Registro Cobros</h5>
+            <a href="/Cobros/Create" class="btn btn-primary">
+                <span class="bi bi-plus-square mt-3"></span> Crear
+            </a>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3">
+                    <label class="col-form-label"><strong>Filtrar por</strong></label>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-form-label"><strong>B&uacute;squeda</strong></label>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <InputSelect class="form-select" @bind-Value="Filtro">
+                        <option value="" selected disabled>Elija una opci&oacute;n</option>
+                        <option value="Deudor">Deudor</option>
+                        <option value="Fecha">Fecha</option>
+                    </InputSelect>
+                </div>
+
+                <div class="col-4">
+                    <div class="input-group">
+                        <input class="form-control" @bind="ValorFiltro" placeholder="Buscar" />
+                        <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <button type="button" class="btn btn-outline-secondary bi bi-arrow-counterclockwise"
+                            @onclick="Restablecer">
+                    </button>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-3">
+                        <label class="col-form-label"><strong>Desde</strong></label>
+                        <InputDate class="form-control" @bind-Value="Desde"></InputDate>
+                    </div>
+
+                    <div class="col-3">
+                        <label class="col-form-label"><strong>Hasta</strong></label>
+                        <div class="input-group">
+                            <InputDate class="form-control" @bind-Value="Hasta"></InputDate>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <QuickGrid Items="@ListaCobros.AsQueryable()" Class="table table-hover text-center mt-3">
+                <PropertyColumn Property="c => c.CobroId" Title="CobroId" />
+                <PropertyColumn Property="c => c.Fecha" Format="d" Title="Fecha" />
+                <PropertyColumn Property="c => c.Deudor.Nombres" Title="Deudor" />
+                <PropertyColumn Property="c => c.Monto" Format="N2" Title="Monto" />
+                <TemplateColumn Title="Opciones">
+                    <a href="/Cobro/Edit/@context.CobroId" class="btn btn-outline-primary bi bi-pencil-square"></a>
+                    <a href="/Cobro/Delete/@context.CobroId" class="btn btn-outline-danger bi bi-trash"></a>
+                </TemplateColumn>
+            </QuickGrid>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-center mb-4">
+            <label class="ms-3"><strong>Cantidad:</strong> @ListaCobros.Count</label>
+            <div class="col-5">
+                <label class="ms-5"><strong>Total:</strong> $@CalcularTotal().ToString("N2")</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Cobros> ListaCobros { get; set; } = new List<Cobros>();
+
+    public string Filtro { get; set; } = string.Empty;
+    public string ValorFiltro { get; set; } = string.Empty;
+
+    public DateTime? Desde { get; set; }
+
+    public DateTime? Hasta { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaCobros = await cobroService.Listar(c => c.CobroId > 0);
+        Desde = null;
+        Hasta = null;
+    }
+
+    private async Task Buscar()
+    {
+        var todosLosCobros = await cobroService.Listar(c => c.CobroId > 0);
+
+        if (Filtro == "Fecha")
+        {
+            if (Desde != null && Hasta != null)
+            {
+                List<Cobros> listaFiltrada = new List<Cobros>();
+
+                foreach (var cobro in todosLosCobros)
+                {
+                    if (cobro.Fecha >= Desde.Value && cobro.Fecha <= Hasta.Value)
+                    {
+                        listaFiltrada.Add(cobro);
+                    }
+                }
+
+                ListaCobros = listaFiltrada;
+            }
+        }
+        else if (ValorFiltro.Trim() != "" && Filtro == "Deudor")
+        {
+            List<Cobros> listaFiltrada = new List<Cobros>();
+
+            foreach (var cobro in todosLosCobros)
+            {
+                if (cobro.Deudor.Nombres.ToLower().Contains(ValorFiltro.ToLower()))
+                {
+                    listaFiltrada.Add(cobro);
+                }
+            }
+
+            ListaCobros = listaFiltrada;
+        }
+    }
+
+    private async Task Restablecer()
+    {
+        ListaCobros = await cobroService.Listar(e => e.CobroId > 0);
+        Filtro = string.Empty;
+        ValorFiltro = string.Empty;
+        Desde = null;
+        Hasta = null;
+    }
+
+    private double CalcularTotal()
+    {
+        double total = 0;
+
+        foreach (var cobro in ListaCobros)
+        {
+            total = total + cobro.Monto;
+        }
+
+        return total;
+    }
+}
