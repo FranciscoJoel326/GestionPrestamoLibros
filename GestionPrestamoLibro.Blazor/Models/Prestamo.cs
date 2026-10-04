@@ -17,10 +17,10 @@ public partial class Prestamo
     public double LibroId { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un deudor válido")]
-    public int DeudorId { get; set; }
 
     [ForeignKey("DeudorId")]
  
     public virtual Deudores Deudor { get; set; } = null!;
 }
+
 
