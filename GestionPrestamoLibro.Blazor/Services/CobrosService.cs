@@ -15,10 +15,10 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         _contextFactory = contextFactory;
     }
 
-    private async Task<bool> Existe(int cobroId)
+    private async Task<bool> Existe(int ? LibroId)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
-        var cobro = await contexto.Cobros.FindAsync(cobroId);
+        var cobro = await contexto.Cobros.FindAsync(libroId);
 
         if (cobro == null)
         {
