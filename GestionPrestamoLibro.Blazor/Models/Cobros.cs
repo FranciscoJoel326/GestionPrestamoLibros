@@ -11,7 +11,5 @@ public partial class Libro
     public DateTime Fecha { get; set; }
 
     public int LibroId { get; set; }
-  
-    [ForeignKey("DeudorId")]
-    [InverseProperty("Cobros")]
 }
+
