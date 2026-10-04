@@ -6,11 +6,11 @@ using Aplicada1.Core;
 
 namespace GestionPrestamoLibro.Services;
 
-public class CobrosService : Aplicada1.Core.IService<Cobros, int>
+public class LibroService : Aplicada1.Core.IService<Cobros, int>
 {
     private readonly IDbContextFactory<Contexto> _contextFactory;
 
-    public CobrosService(IDbContextFactory<Contexto> contextFactory)
+    public LibroService(IDbContextFactory<Contexto> contextFactory)
     {
         _contextFactory = contextFactory;
     }
