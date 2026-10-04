@@ -1,7 +1,7 @@
 ﻿using Aplicada1.Core;
-using GestionPrestamoLibro.Context;
-using GestionPrestamoLibro.Models;
 using Microsoft.EntityFrameworkCore;
+using RegistroLibros.Context;
+using RegistroLibros.Models;
 using System.Linq.Expressions;
 
 namespace GestionPrestamoLibro.Services;
