@@ -20,16 +20,6 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         return await contexto.Cobros.AnyAsync(c=> c.Il == LibroId);
 
-        if (libro == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
     private async Task<bool> Insertar(Cobros cobro)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
@@ -133,3 +123,4 @@ public enum TipoOperacion
     Suma = 1,
     Resta = 2
 }
+
