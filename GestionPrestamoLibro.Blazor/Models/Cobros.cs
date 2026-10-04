@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionPrestamoLibro.Models;
 
-public partial class LibroId
+public partial class Libro
 {
     [Key]
     public int Id { get; set; }
 
     public DateTime Fecha { get; set; }
 
-    public int DeudorId { get; set; }
+    public int LibroId { get; set; }
 
     [Range(1, double.MaxValue, ErrorMessage = "Debe introducir un monto valido")]
     public double Monto { get; set; }
