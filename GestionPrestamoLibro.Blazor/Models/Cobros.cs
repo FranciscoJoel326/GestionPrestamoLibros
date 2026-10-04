@@ -6,7 +6,7 @@ namespace GestionPrestamoLibro.Models;
 public partial class Cobros
 {
     [Key]
-    public int CobroId { get; set; }
+    public int LibroId { get; set; }
 
     public DateTime Fecha { get; set; }
 
