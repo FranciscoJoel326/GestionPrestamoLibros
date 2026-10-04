@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionPrestamoLibro.Models;
 
-public partial class Deudores
+public partial class Partidas
 {
     [Key]
     public int DeudorId { get; set; }
@@ -19,3 +19,4 @@ public partial class Deudores
     [InverseProperty("Deudor")]
     public virtual ICollection<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
 }
+
