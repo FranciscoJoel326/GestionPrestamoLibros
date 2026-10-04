@@ -1,3 +1,4 @@
+﻿using Aplicada1.Core;
 using GestionPrestamoLibro.Context;
 using GestionPrestamoLibro.Models;
 using Microsoft.EntityFrameworkCore;
