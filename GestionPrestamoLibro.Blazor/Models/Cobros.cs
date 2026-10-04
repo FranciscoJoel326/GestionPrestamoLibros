@@ -8,7 +8,7 @@ public partial class LibroId
     [Key]
     public int Id { get; set; }
 
-    public AnoPublicacion Fecha { get; set; }
+    public DateTime Fecha { get; set; }
 
     public int DeudorId { get; set; }
 
