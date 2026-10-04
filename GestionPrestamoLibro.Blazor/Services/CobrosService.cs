@@ -20,7 +20,7 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         var cobro = await contexto.Cobros.FindAsync(libroId);
 
-        if (cobro == null)
+        if (libro == null)
         {
             return false;
         }
