@@ -14,7 +14,7 @@ public partial class Prestamo
     [Range(1, int.MaxValue, ErrorMessage = "El concepto no puede ser menor a 1")]
     public double Balance { get; set; }
 
-    public double Balance { get; set; }
+    public double LibroId { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un deudor válido")]
     public int DeudorId { get; set; }
