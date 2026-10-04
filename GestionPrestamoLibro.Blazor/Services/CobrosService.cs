@@ -56,8 +56,7 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         contexto.Update(libro);
-        var cantidad = await contexto.SaveChangesAsync();
-        return cantidad > 0;
+        return await contexto.SaveChangesAsync() > 0; cantidad > 0;
     }
 
     public async Task<bool> Guardar(Cobros cobro)
