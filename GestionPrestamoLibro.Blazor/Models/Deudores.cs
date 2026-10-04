@@ -9,7 +9,7 @@ namespace GestionPrestamoLibro.Models;
 public partial class Partidas
 {
     [Key]
-    public int DeudorId { get; set; }
+    public int PartidasId { get; set; }
 
     public string Nombres { get; set; } = null!;
 
