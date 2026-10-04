@@ -29,7 +29,7 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         return cantidad > 0;
     }
 
-    private async Task AfectarPrestamos(ICollection<PrestamoDetalle> detalle, TipoOperacion tipoOperacion)
+
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
 
@@ -127,4 +127,5 @@ public enum TipoOperacion
     Suma = 1,
     Resta = 2
 }
+
 
