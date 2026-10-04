@@ -13,7 +13,6 @@ public partial class Libro
     public int LibroId { get; set; }
 
     [Range(1, double.MaxValue, ErrorMessage = "Debe introducir un monto valido")]
-    public double Monto { get; set; }
 
     [InverseProperty("Cobro")]
     public virtual ICollection<CobrosDetalle> CobrosDetalle { get; set; } = new List<CobrosDetalle>();
