@@ -1,38 +1,29 @@
-using BlazorBootstrap;
-namespace GestionPrestamoLibro.Extensors;
 
-public static class ToastServiceExtensions
+﻿using BlazorBootstrap;
+
+namespace RegistroLibros.Extentors;
+
+public static class ToastServiceExtentions
 {
-    public static ToastMessage ShowToast(this ToastService toastService, ToastType toastType, string title, string? customMessage = null)
+    public static ToastMessage ShowToast(this ToastService toastService, ToastType toastType, string title, string customMessage = null)
     {
-        ToastMessage message = new ToastMessage();
-        message.Type = toastType;
-        message.Title = title;
-
-        if (customMessage == null)
+        var message = new ToastMessage()
         {
-            message.Message = "A las " + DateTime.Now.ToString("hh:mm tt");
-        }
-        else
-        {
-            message.Message = customMessage;
-        }
+            Type = toastType,
+            Title = title,
+            Message = customMessage ?? $"A las {DateTime.Now.ToString("hh:mm tt")}"
+        };
 
         toastService.Notify(message);
         return message;
     }
 
-    public static ToastMessage ShowSuccess(this ToastService toastService, string? customMessage = null, string title = "Success")
+    public static ToastMessage ShowSuccess(this ToastService toastService, string customMessage = null, string title = "Exito")
     {
         return toastService.ShowToast(ToastType.Success, title, customMessage);
     }
 
-    public static ToastMessage ShowWarning(this ToastService toastService, string? customMessage = null, string title = "Warning")
-    {
-        return toastService.ShowToast(ToastType.Warning, title, customMessage);
-    }
-
-    public static ToastMessage ShowError(this ToastService toastService, string? customMessage = null, string title = "Error")
+    public static ToastMessage ShowError(this ToastService toastService, string customMessage = null, string title = "Error")
     {
         return toastService.ShowToast(ToastType.Danger, title, customMessage);
     }
