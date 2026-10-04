@@ -20,10 +20,10 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         return await contexto.Cobros.AnyAsync(c=> c.Il == LibroId);
 
-    private async Task<bool> Insertar(Cobros cobro)
+    private async Task<bool> Insertar(Libro libro)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
-        contexto.Cobros.Add(cobro);
+        contexto.libros.Add(Libro);
         await AfectarPrestamos(cobro.CobrosDetalle, TipoOperacion.Resta);
         var cantidad = await contexto.SaveChangesAsync();
         return cantidad > 0;
