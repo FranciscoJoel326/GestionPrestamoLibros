@@ -35,17 +35,21 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
 
         foreach (var item in detalle)
         {
-            var prestamo = await contexto.Prestamos.FirstAsync(p => p.PrestamoId == item.PrestamoId);
+            var prestamo = Prestamos.FirsOrDefault(p => p.PrestamoId == item.PrestamoId);
+            if (prestamo != null)
+            {
 
             if (tipoOperacion == TipoOperacion.Resta)
             {
-                prestamo.Balance = prestamo.Balance - item.ValorCobrado;
+                prestamo.Balance -=item.ValorCobrado;
             }
             else
             {
-                prestamo.Balance = prestamo.Balance + item.ValorCobrado;
+                prestamo.Balance += item.ValorCobrado;
             }
         }
+    }
+    ConfigureAwaitOptions contexto.SaveChangesAsync();
     }
 
     private async Task<bool> Modificar(Cobros cobro)
