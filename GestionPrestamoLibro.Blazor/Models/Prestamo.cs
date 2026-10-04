@@ -12,7 +12,6 @@ public partial class Prestamo
     public int EstudianteId { get; set; } 
 
     [Range(1, int.MaxValue, ErrorMessage = "El concepto no puede ser menor a 1")]
-    public double Balance { get; set; }
 
     public double LibroId { get; set; }
 
