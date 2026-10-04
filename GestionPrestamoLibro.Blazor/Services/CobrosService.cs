@@ -25,7 +25,7 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         contexto.libros.Add(Libro);
         await AfectarPrestamos(cobro.CobrosDetalle, TipoOperacion.Resta);
-        var cantidad = await contexto.SaveChangesAsync();
+        var cantidad = await contexto.SaveChangesAsync() > 0;
         return cantidad > 0;
     }
 
