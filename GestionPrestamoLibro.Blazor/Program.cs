@@ -1,7 +1,7 @@
-using GestionPrestamoLibro.Components;
-using GestionPrestamoLibro.Context;
-using GestionPrestamoLibro.Services;
 using Microsoft.EntityFrameworkCore;
+using RegistroLibros.Components;
+using RegistroLibros.Context;
+using RegistroLibros.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
