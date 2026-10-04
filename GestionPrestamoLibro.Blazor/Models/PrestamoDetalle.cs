@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionPrestamoLibro.Models;
 
-public partial class CobrosDetalle
+public partial class PrestamoDetalle
 {
     [Key]
     public int DetalleId { get; set; }

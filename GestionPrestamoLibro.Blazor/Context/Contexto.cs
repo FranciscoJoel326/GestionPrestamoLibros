@@ -10,7 +10,7 @@ public class Contexto : DbContext
     public virtual DbSet<Deudores> Deudores { get; set; }
     public virtual DbSet<Prestamos> Prestamos { get; set; }
     public virtual DbSet<Cobros> Cobros { get; set; }
-    public virtual DbSet<CobrosDetalle> CobrosDetalle { get; set; }
+    public virtual DbSet<PrestamoDetalle> CobrosDetalle { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

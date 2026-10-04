@@ -78,7 +78,7 @@
     [Parameter]
     public int CobroId { get; set; }
     public Cobros Cobro { get; set; } = new Cobros();
-    public CobrosDetalle DetalleSeleccionado { get; set; } = new CobrosDetalle();
+    public PrestamoDetalle DetalleSeleccionado { get; set; } = new PrestamoDetalle();
     public Deudores Deudor { get; set; } = new Deudores();
     public List<Prestamos> ListaPrestamos { get; set; } = new List<Prestamos>();
 
@@ -110,7 +110,7 @@
 
     private void HandlePrestamoSelected((Prestamos prestamo, double valor) selection)
     {
-        CobrosDetalle detalle = new CobrosDetalle();
+        PrestamoDetalle detalle = new PrestamoDetalle();
         detalle.PrestamoId = selection.prestamo.PrestamoId;
         detalle.ValorCobrado = selection.valor;
 
@@ -123,7 +123,7 @@
         }
         Cobro.Monto = montoTotal;
 
-        DetalleSeleccionado = new CobrosDetalle();
+        DetalleSeleccionado = new PrestamoDetalle();
     }
 
     public async Task Modificar()
@@ -141,7 +141,7 @@
         }
     }
 
-    public async Task RemoverDetalle(CobrosDetalle detalle)
+    public async Task RemoverDetalle(PrestamoDetalle detalle)
     {
         bool confirmado = await JS.InvokeAsync<bool>("confirm", "¿Está seguro de que desea eliminar este detalle?");
 
