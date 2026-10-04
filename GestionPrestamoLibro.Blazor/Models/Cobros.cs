@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionPrestamoLibro.Models;
 
-public partial class Cobros
+public partial class LibroId
 {
     [Key]
-    public int LibroId { get; set; }
+    public int Id { get; set; }
 
     public DateTime Fecha { get; set; }
 
