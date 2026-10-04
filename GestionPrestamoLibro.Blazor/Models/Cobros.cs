@@ -14,5 +14,4 @@ public partial class Libro
   
     [ForeignKey("DeudorId")]
     [InverseProperty("Cobros")]
-    public virtual Deudores Deudor { get; set; } = null!;
 }
