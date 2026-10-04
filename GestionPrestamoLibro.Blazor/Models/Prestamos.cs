@@ -23,6 +23,5 @@ public partial class Prestamos
     public int DeudorId { get; set; }
 
     [ForeignKey("DeudorId")]
-    [InverseProperty("Prestamos")]
     public virtual Deudores Deudor { get; set; } = null!;
 }
