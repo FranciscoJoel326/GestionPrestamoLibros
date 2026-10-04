@@ -17,9 +17,8 @@ public partial class Prestamo
 
     [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un deudor válido")]
 
-    [ForeignKey("DeudorId")]
- 
-    public virtual Deudores Deudor { get; set; } = null!;
+    [ForeignKey("EstudianteId")]
+    public virtual Estudiante estudiante { get; set; } = null!;
 }
 
 
