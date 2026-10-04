@@ -2,6 +2,7 @@ using GestionPrestamoLibro.Context;
 using GestionPrestamoLibro.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Aplicada1.Core;
 
 namespace GestionPrestamoLibro.Services;
 
