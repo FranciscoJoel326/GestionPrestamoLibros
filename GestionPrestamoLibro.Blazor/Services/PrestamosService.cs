@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace GestionPrestamoLibro.Services;
 
-public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
+public class PrestamosService : Aplicada1.Core.IService<Prestamo, int>
 {
     private readonly IDbContextFactory<Contexto> _contextFactory;
 
@@ -29,7 +29,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         }
     }
 
-    private async Task<bool> Insertar(Prestamos prestamo)
+    private async Task<bool> Insertar(Prestamo prestamo)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         contexto.Prestamos.Add(prestamo);
@@ -37,7 +37,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         return cantidad > 0;
     }
 
-    private async Task<bool> Modificar(Prestamos prestamo)
+    private async Task<bool> Modificar(Prestamo prestamo)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         contexto.Update(prestamo);
@@ -45,7 +45,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         return cantidad > 0;
     }
 
-    public async Task<bool> Guardar(Prestamos prestamo)
+    public async Task<bool> Guardar(Prestamo prestamo)
     {
         prestamo.Balance = prestamo.Monto;
 
@@ -61,7 +61,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         }
     }
 
-    public async Task<Prestamos?> Buscar(int prestamoId)
+    public async Task<Prestamo?> Buscar(int prestamoId)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         var prestamo = await contexto.Prestamos
@@ -85,7 +85,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         return cantidad > 0;
     }
 
-    public async Task<List<Prestamos>> GetList(Expression<Func<Prestamos, bool>> criterio)
+    public async Task<List<Prestamo>> GetList(Expression<Func<Prestamo, bool>> criterio)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         var lista = await contexto.Prestamos
@@ -96,7 +96,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         return lista;
     }
 
-    public async Task<List<Prestamos>> GetPrestamosPendientes(int deudorId)
+    public async Task<List<Prestamo>> GetPrestamosPendientes(int deudorId)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         var prestamosDelDeudor = await contexto.Prestamos
@@ -105,7 +105,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
             .AsNoTracking()
             .ToListAsync();
 
-        List<Prestamos> pendientes = new List<Prestamos>();
+        List<Prestamo> pendientes = new List<Prestamo>();
 
         foreach (var prestamo in prestamosDelDeudor)
         {
@@ -118,7 +118,7 @@ public class PrestamosService : Aplicada1.Core.IService<Prestamos, int>
         return pendientes;
     }
 
-    public async Task<Prestamos?> BuscarPrestamo(int id)
+    public async Task<Prestamo?> BuscarPrestamo(int id)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
         var prestamo = await contexto.Prestamos

@@ -80,7 +80,7 @@
     public Cobros Cobro { get; set; } = new Cobros();
     public PrestamoDetalle DetalleSeleccionado { get; set; } = new PrestamoDetalle();
     public Deudores Deudor { get; set; } = new Deudores();
-    public List<Prestamos> ListaPrestamos { get; set; } = new List<Prestamos>();
+    public List<Prestamo> ListaPrestamos { get; set; } = new List<Prestamo>();
 
     public string Mensaje = string.Empty;
 
@@ -108,7 +108,7 @@
         ListaPrestamos = await prestamosService.GetPrestamosPendientes(Cobro.DeudorId);
     }
 
-    private void HandlePrestamoSelected((Prestamos prestamo, double valor) selection)
+    private void HandlePrestamoSelected((Prestamo prestamo, double valor) selection)
     {
         PrestamoDetalle detalle = new PrestamoDetalle();
         detalle.PrestamoId = selection.prestamo.PrestamoId;

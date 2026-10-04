@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionPrestamoLibro.Models;
 
-public partial class Prestamos
+public partial class Prestamo
 {
     [Key]
     public int PrestamoId { get; set; }
@@ -23,5 +23,6 @@ public partial class Prestamos
     public int DeudorId { get; set; }
 
     [ForeignKey("DeudorId")]
+ 
     public virtual Deudores Deudor { get; set; } = null!;
 }

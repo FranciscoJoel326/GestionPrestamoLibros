@@ -22,7 +22,7 @@
 
 @code {
     [Parameter]
-    public List<Prestamos> Prestamos { get; set; } = new List<Prestamos>();
+    public List<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
 
     [Parameter]
     public int PrestamoId { get; set; }
@@ -31,7 +31,7 @@
     public double Valor { get; set; }
 
     [Parameter]
-    public EventCallback<(Prestamos Prestamo, double Valor)> OnPrestamoSelected { get; set; }
+    public EventCallback<(Prestamo Prestamo, double Valor)> OnPrestamoSelected { get; set; }
 
     private string? ErrorMessage { get; set; } = null;
 
@@ -41,7 +41,7 @@
 
         if (PrestamoId > 0)
         {
-            Prestamos? prestamoSeleccionado = null;
+            Prestamo? prestamoSeleccionado = null;
 
             foreach (var prestamo in Prestamos)
             {

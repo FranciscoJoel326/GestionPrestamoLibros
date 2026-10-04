@@ -17,5 +17,5 @@ public partial class Deudores
     public virtual ICollection<Cobros> Cobros { get; set; } = new List<Cobros>();
 
     [InverseProperty("Deudor")]
-    public virtual ICollection<Prestamos> Prestamos { get; set; } = new List<Prestamos>();
+    public virtual ICollection<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
 }

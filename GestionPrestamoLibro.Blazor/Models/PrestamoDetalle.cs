@@ -6,15 +6,16 @@ namespace GestionPrestamoLibro.Models;
 public partial class PrestamoDetalle
 {
     [Key]
-    public int DetalleId { get; set; }
-
-    public int CobroId { get; set; }
+    public int PrestamoDetalleId { get; set; }
 
     public int PrestamoId { get; set; }
 
-    public double ValorCobrado { get; set; }
+    public int LibroId { get; set; }
 
-    [ForeignKey("CobroId")]
-    [InverseProperty("CobrosDetalle")]
-    public virtual Cobros Cobro { get; set; } = null!;
+    public int Cantidad { get; set; }
+
+    [ForeignKey("PrestamoId")]
+    [InverseProperty("PrestamoDetalle")]
+    public virtual Prestamo Prestamo  { get; set; } = null!;
 }
+

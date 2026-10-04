@@ -58,7 +58,7 @@
 
 @code {
 
-    public List<Prestamos> ListaPrestamos { get; set; } = new List<Prestamos>();
+    public List<Prestamo> ListaPrestamos { get; set; } = new List<Prestamo>();
 
     public string Filtro { get; set; } = string.Empty;
     public string ValorFiltro { get; set; } = string.Empty;
@@ -76,7 +76,7 @@
         {
             if (Filtro == "Deudor")
             {
-                List<Prestamos> listaFiltrada = new List<Prestamos>();
+                List<Prestamo> listaFiltrada = new List<Prestamo>();
 
                 foreach (var prestamo in todosLosPrestamos)
                 {
@@ -90,7 +90,7 @@
             }
             else if (Filtro == "Concepto")
             {
-                List<Prestamos> listaFiltrada = new List<Prestamos>();
+                List<Prestamo> listaFiltrada = new List<Prestamo>();
 
                 foreach (var prestamo in todosLosPrestamos)
                 {
