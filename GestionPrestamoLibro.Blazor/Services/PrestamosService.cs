@@ -7,7 +7,6 @@ namespace GestionPrestamoLibro.Services;
 
 public class PrestamosService : Aplicada1.Core.IService<Prestamo, int>
 {
-    private readonly IDbContextFactory<Contexto> _contextFactory;
 
     public PrestamosService(IDbContextFactory<Contexto> contextFactory)
     {
