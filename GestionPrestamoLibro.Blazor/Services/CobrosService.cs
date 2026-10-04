@@ -52,10 +52,10 @@ public class LibroService : Aplicada1.Core.IService<Cobros, int>
     ConfigureAwaitOptions contexto.SaveChangesAsync();
     }
 
-    private async Task<bool> Modificar(Libros Libro)
+    private async Task<bool> Modificar(Libros libro)
     {
         await using var contexto = await _contextFactory.CreateDbContextAsync();
-        contexto.Update(cobro);
+        contexto.Update(libro);
         var cantidad = await contexto.SaveChangesAsync();
         return cantidad > 0;
     }
