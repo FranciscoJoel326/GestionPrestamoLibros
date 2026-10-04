@@ -19,3 +19,4 @@ public partial class PrestamoDetalle
     public virtual Prestamo Prestamo  { get; set; } = null!;
 }
 
+
