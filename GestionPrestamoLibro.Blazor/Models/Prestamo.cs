@@ -9,10 +9,10 @@ public partial class Prestamo
     public int PrestamoId { get; set; }
 
     [Required(ErrorMessage = "Este campo es requerido")]
-    public string Concepto { get; set; } = null!;
+    public int EstudianteId { get; set; } 
 
-    [Range(1, double.MaxValue, ErrorMessage = "El monto no puede ser menor a 1")]
-    public double Monto { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "El concepto no puede ser menor a 1")]
+    public double Balance { get; set; }
 
     public double Balance { get; set; }
 
